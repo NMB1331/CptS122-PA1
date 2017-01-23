@@ -95,4 +95,28 @@ unsigned int compute_steps_taken(FitbitData todays_data[NUM_MINUTES]);
 *************************************************************/
 double compute_average_heartrate(FitbitData todays_data[NUM_MINUTES]);
 
+/*************************************************************
+* Function: compute_max_steps                               *
+* Date Created: 1/20/2017                                   *
+* Date Last Modified: 1/20/2016                             *
+* Description: Calculates the max steps                     *
+* Input parameters: Fitbit array                            *
+* Returns: Max number of steps                              *
+* Preconditions: None                                       *
+* Postconditions: None                                      *
+*************************************************************/
+unsigned int compute_max_steps(FitbitData todays_data[NUM_MINUTES]);
+
+/*************************************************************
+* Function: compute_worst_sleep                             *
+* Date Created: 1/21/2017                                   *
+* Date Last Modified: 1/21/2016                             *
+* Description: Calculates the period of worst sleep         *
+* Input parameters: Fitbit array, string start_time, string end_time
+* Returns: None (modifies start and end time pointers)      *
+* Preconditions: None                                       *
+* Postconditions: None                                      *
+*************************************************************/
+void compute_worst_sleep(char *start_time, char *end_time, FitbitData todays_data[NUM_MINUTES]);
+
 #endif

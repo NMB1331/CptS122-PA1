@@ -4,8 +4,9 @@
 int main(void)
 {
   //Array initialized; file read
-  FILE *data = NULL;
+  FILE *data = NULL, *results = NULL;
   data = fopen("FitbitData.csv", "r");
+  results = fopen("Results.csv", "w");
   FitbitData todays_data[1441];
   if (data == NULL)
   {
@@ -31,13 +32,25 @@ int main(void)
 
   //Average heart rate
   double average_heart_rate = compute_average_heartrate(todays_data);
-  printf("The average heart rate for the day was %lf\n", average_heart_rate);
+  printf("The average heart rate for the day was %lf bpm\n", average_heart_rate);
+
+  //Max steps taken in a minute
+  unsigned int max_steps = compute_max_steps(todays_data);
+  printf("The max steps taken in a minute was %d\n", max_steps);
+
+  //Computes the range with the worst sleep_level
+  char start_time[10], end_time[10];
+  compute_worst_sleep(start_time, end_time, todays_data);
 
 
+  //Writes results to outfile
+  fprintf(results, "Total Calories,Total Distance,Total Floors,Total Steps,Avg Heartrate,Max Steps,Sleep\n");
+  fprintf(results, "%lf,%lf,%d,%d,%lf,%d,%s:%s", total_calories, total_miles, total_floors, total_steps, average_heart_rate, max_steps, start_time, end_time);
 
   //Files closed
   printf("\n");
   fclose(data);
+  fclose(results);
   return 0;
 }
 /*

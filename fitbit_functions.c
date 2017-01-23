@@ -141,3 +141,48 @@ double compute_average_heartrate(FitbitData todays_data[NUM_MINUTES])
   }
   return average_sum / counter;
 }
+
+//Function that calculates the max number of steps taken
+unsigned int compute_max_steps(FitbitData todays_data[NUM_MINUTES])
+{
+  unsigned int max_steps = 0;
+  for (int i=0; i<NUM_MINUTES; i++)
+  {
+    if (todays_data[i].steps >= max_steps)
+    {
+      max_steps = todays_data[i].steps;
+    }
+
+  }
+  return max_steps;
+}
+
+//Function that determines the period of best and worst sleep
+void compute_worst_sleep(char *start_time, char *end_time, FitbitData todays_data[NUM_MINUTES])
+{
+  int counter = 0, current_sum = 0;
+  int max_start = 0, max_end = 0, max_sum = 0;
+  for (int i=0; i<NUM_MINUTES; i++)
+  {
+    if (todays_data[i].sleepLevel > 1)
+    {
+      counter = i;
+      while (todays_data[counter].sleepLevel > 1)
+      {
+        current_sum += todays_data[counter].sleepLevel;
+        counter++;
+      }
+      if (current_sum > max_sum)
+      {
+        max_start = i;
+        max_end = counter;
+        max_sum = current_sum;
+      }
+
+    }
+    current_sum = 0;
+  }
+  strncpy(start_time, todays_data[max_start].minute, 9);
+  strncpy(end_time, todays_data[max_end].minute, 9);
+  printf("The period of worst sleep was %s to %s\n", start_time, end_time);
+}
